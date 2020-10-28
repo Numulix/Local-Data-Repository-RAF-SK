@@ -96,7 +96,7 @@ public class DataRepoJsonImpl extends DataRepoSpec{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
+				System.out.println("File does not exist");
 				e.printStackTrace();
 			}
 		}

@@ -58,13 +58,48 @@ public abstract class DataRepoSpec {
 		add(new Entity(maxId+1, name, attributes));
 	}
 	
+	public List<Entity> filterByArgs(List<Entity> list, Map<String, Object> args) {
+		List<Entity> returnList = new ArrayList<Entity>();
+		
+		for (Entity e: list) {
+			Map<String, Object> attr = e.getAttributes();
+			
+			boolean flag = true;
+			for (Map.Entry<String, Object> arg: args.entrySet()) {
+				if (attr.containsKey(arg.getKey())) {
+					if (!attr.get(arg.getKey()).equals(arg.getValue())) {
+						flag = false;
+					}
+				} else {
+					flag = false;
+				}
+			}
+			
+			if (flag) returnList.add(e);
+			
+		}
+		
+		return returnList;
+	}
+	
 	public List<Entity> filterByArgs(Map<String, Object> args) {
 		List<Entity> returnList = new ArrayList<Entity>();
 		
 		for (Entity e: entityList) {
 			Map<String, Object> attr = e.getAttributes();
 			
+			boolean flag = true;
+			for (Map.Entry<String, Object> arg: args.entrySet()) {
+				if (attr.containsKey(arg.getKey())) {
+					if (!attr.get(arg.getKey()).equals(arg.getValue())) {
+						flag = false;
+					}
+				} else {
+					flag = false;
+				}
+			}
 			
+			if (flag) returnList.add(e);
 			
 		}
 		
@@ -79,6 +114,12 @@ public abstract class DataRepoSpec {
 		}
 		
 		return returnList;
+	}
+	
+	public List<Entity> filterByNameAndArgs(String name, Map<String, Object> args) {
+		List<Entity> nameList = filterByEntityName(name);
+		
+		return filterByArgs(nameList, args);
 	}
 	
 	public abstract void save();

@@ -49,6 +49,23 @@ public abstract class DataRepoSpec {
 		save();
 	}
 	
+	public void delete(Entity en) {
+		entityList.remove(en);
+		save();
+	}
+	
+	public Entity findEntityByID(int id) {
+		for (Entity e: entityList) {
+			if (e.getId() == id) return e;
+		}
+		
+		return null;
+	}
+	
+	public void deleteByID(int id) {
+		delete(findEntityByID(id));
+	}
+	
 	public void add(int id, String name, Map<String, Object> attributes) {
 		add(new Entity(id, name, attributes));
 	}

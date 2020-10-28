@@ -58,6 +58,29 @@ public abstract class DataRepoSpec {
 		add(new Entity(maxId+1, name, attributes));
 	}
 	
+	public List<Entity> filterByArgs(Map<String, Object> args) {
+		List<Entity> returnList = new ArrayList<Entity>();
+		
+		for (Entity e: entityList) {
+			Map<String, Object> attr = e.getAttributes();
+			
+			
+			
+		}
+		
+		return returnList;
+	}
+	
+	public List<Entity> filterByEntityName(String name) {
+		List<Entity> returnList = new ArrayList<Entity>();
+		
+		for (Entity e: entityList) {
+			if (e.getName().equals(name)) returnList.add(e);
+		}
+		
+		return returnList;
+	}
+	
 	public abstract void save();
 	public abstract void load();
 	

@@ -44,7 +44,7 @@ public abstract class DataRepoSpec {
 		return max;
 	}
 	
-	private void add(Entity en) {
+	private void addEntity(Entity en) {
 		getEntityList().add(en);
 		save();
 	}
@@ -67,12 +67,12 @@ public abstract class DataRepoSpec {
 	}
 	
 	public void add(int id, String name, Map<String, Object> attributes) {
-		add(new Entity(id, name, attributes));
+		addEntity(new Entity(id, name, attributes));
 	}
 	
 	public void addAutoId(String name, Map<String, Object> attributes) {
 		int maxId = findMaxID();
-		add(new Entity(maxId+1, name, attributes));
+		addEntity(new Entity(maxId+1, name, attributes));
 	}
 	
 	public List<Entity> filterByArgs(List<Entity> list, Map<String, Object> args) {

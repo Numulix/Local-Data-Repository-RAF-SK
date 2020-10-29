@@ -34,7 +34,8 @@ public class DataRepoJsonImpl extends DataRepoSpec{
 	@Override
 	public void save() {
 		for (File f: jsonRepo.listFiles()) {
-			f.delete();
+			if (f.getName().endsWith(".json"));
+				f.delete();
 		}
 		
 		List<Entity> temp = new ArrayList<Entity>();

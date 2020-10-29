@@ -30,7 +30,8 @@ public class DataRepoYamlImpl extends DataRepoSpec{
 	@Override
 	public void save() {
 		for (File f: yamlRepo.listFiles()) {
-			f.delete();
+			if (f.getName().endsWith(".yaml") || f.getName().endsWith(".yml"))
+				f.delete();
 		}
 		
 		List<Entity> temp = new ArrayList<Entity>();

@@ -15,5 +15,13 @@ Acts as a local database that stores a variety of entities in a specific format 
   - [ ] Update
   - [X] Delete
 - [ ] Filter data
+  - [X] Filter data by given entity name
+  - [ ] Filter data by given attributes and their values
 - [ ] Sort data
 - [ ] GUI test application
+
+## Authors
+Student | Broj indeksa | E-mail
+--------|--------------|-------
+Jovan Babic | RN 30/2018 | jbabic3018rn@raf.rs
+Filip Cmiljanovic | RN 5/2018 | fcmiljanovic518rn@raf.rs

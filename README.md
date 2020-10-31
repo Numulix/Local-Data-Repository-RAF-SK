@@ -20,6 +20,47 @@ Acts as a local database that stores a variety of entities in a specific format 
 - [ ] Sort data
 - [ ] GUI test application
 
+## Custom format example
+```
+<
+	(
+		"id" -> 1;
+		"name" -> "Student";
+		"attributes" -> {
+			"ime" -> "Pera",
+			"prezime" -> "Peric",
+			"smer" -> "RN",
+			"godina upisa" -> 2018
+		}
+	),
+	(
+		"id" -> 2;
+		"name" -> "Lokacija";
+		"attributes" -> {
+			"grad" -> "Beograd",
+			"adresa" -> "Knez Mihailova 6",
+			"postanski broj" -> 11000
+		}
+	),
+	(
+		"id" -> 3;
+		"name" -> "Student";
+		"attributes" -> {
+			"ime" -> "Pera",
+			"prezime" -> "Peric",
+			"fakultet" -> (
+				"id" -> 4;
+				"name" -> "Fakultet";
+				"attributes" -> {
+					"ime fakulteta" -> "Racunarski Fakultet",
+					"smer" -> "RI",
+					"godina upisa" -> 2016
+				}
+		}
+	)
+>
+```
+
 ## Authors
 Student | Broj indeksa | E-mail
 --------|--------------|-------

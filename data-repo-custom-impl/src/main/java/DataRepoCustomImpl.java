@@ -1,4 +1,6 @@
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -107,6 +109,23 @@ public class DataRepoCustomImpl extends DataRepoSpec{
 					}
 				} else {
 					// TODO: Implementirati upis entiteta kao atribut
+					sb.append("(\n\t\t\t\t");
+					Entity temp = (Entity)attribute.getValue();
+					sb.append("\"id\" -> " + temp.getId() + ";\n\t\t\t\t");
+					sb.append("\"name\" -> \"" + temp.getName() + "\";\n\t\t\t\t");
+					sb.append("\"attributes\" -> {");
+					for (Map.Entry<String, Object> atr: temp.getAttributes().entrySet()) {
+						sb.append("\n\t\t\t\t\t");
+						sb.append("\"" + atr.getKey() + "\" -> ");
+						if (atr.getValue() instanceof String) {
+							sb.append("\"");
+							sb.append(atr.getValue());
+							sb.append("\"");
+						} else sb.append(atr.getValue());
+						sb.append(",");
+					}
+					sb.deleteCharAt(sb.length() - 1);
+					sb.append("\n\t\t\t\t}");
 				}
 				sb.append(",");
 			}
@@ -118,6 +137,16 @@ public class DataRepoCustomImpl extends DataRepoSpec{
 		sb.deleteCharAt(sb.length() - 1);
 		sb.append("\n");
 		sb.append(">");
+		
+		File f = new File(pathname);
+		try {
+			FileWriter fw = new FileWriter(f);
+			fw.write(sb.toString());
+			fw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Override

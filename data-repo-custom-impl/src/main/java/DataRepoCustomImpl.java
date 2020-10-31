@@ -1,6 +1,7 @@
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import api.DataRepoSpec;
 import api.Entity;
@@ -39,9 +40,84 @@ public class DataRepoCustomImpl extends DataRepoSpec{
 			}
 		}
 	}
+	
+	/* EXAMPLE SAVE
+		 <
+			(
+				"id" -> 1;
+				"name" -> "Student";
+				"attributes" -> {
+					"ime" -> "Pera",
+					"prezime" -> "Peric",
+					"smer" -> "RN",
+					"godina upisa" -> 2018
+				}
+			),
+			(
+				"id" -> 2;
+				"name" -> "Lokacija";
+				"attributes" -> {
+					"grad" -> "Beograd",
+					"adresa" -> "Knez Mihailova 6",
+					"postanski broj" -> 11000
+				}
+			),
+			(
+				"id" -> 3;
+				"name" -> "Student";
+				"attributes" -> {
+					"ime" -> "Ljuba",
+					"prezime" -> "Ljubic",
+					"fakultet" -> (
+						"id" -> 4;
+						"name" -> "Fakultet";
+						"attributes" -> {
+							"ime fakulteta" -> "Racunarski Fakultet",
+							"smer" -> "RI",
+							"godina upisa" -> 2016
+						}
+				}
+			)
+		>
+	 */
 
 	private void saveListToFile(List<Entity> lista, String pathname) {
+		StringBuilder sb = new StringBuilder("<\n\t");
 		
+		for (int i = 0; i < lista.size(); i++) {
+			sb.append("(\n\t\t");
+			sb.append("\"id\" -> ");
+			sb.append(lista.get(i).getId());
+			sb.append(";\n\t\t");
+			sb.append("\"name\" -> \"");
+			sb.append(lista.get(i).getName());
+			sb.append("\";\n\t\t");
+			sb.append("\"attributes\" -> {");
+			for (Map.Entry<String, Object> attribute: lista.get(i).getAttributes().entrySet()) {
+				sb.append("\n\t\t\t\"");
+				sb.append(attribute.getKey());
+				sb.append("\" -> ");
+				if (!(attribute.getValue() instanceof Entity)) {
+					if (attribute.getValue() instanceof String) {
+						sb.append("\"");
+						sb.append(attribute.getValue());
+						sb.append("\"");
+					} else {
+						sb.append(attribute.getValue());
+					}
+				} else {
+					// TODO: Implementirati upis entiteta kao atribut
+				}
+				sb.append(",");
+			}
+			sb.deleteCharAt(sb.length()-1);
+			sb.append("\n"
+					+ "\t\t}"
+					+ "\n\t),");
+		}
+		sb.deleteCharAt(sb.length() - 1);
+		sb.append("\n");
+		sb.append(">");
 	}
 	
 	@Override

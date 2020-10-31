@@ -1,3 +1,4 @@
+package customImpl;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -27,19 +28,42 @@ public class DataRepoCustomImpl extends DataRepoSpec{
 		List<Entity> temp = new ArrayList<Entity>();
 		int fileNum = 1;
 		int counter = 0;
-		
+
 		for (Entity e: getEntityList()) {
+
 			temp.add(e);
 			counter++;
 			if (counter == getMaxEnPerFile()) {
+
 				counter = 0;
 				StringBuilder sb = new StringBuilder("custom/data-repo-");
 				sb.append(fileNum);
 				sb.append(".raf");
-				saveListToFile(temp, sb.toString());
-				temp.clear();
-				fileNum++;
+				File f = new File(sb.toString());
+				try {
+					f.createNewFile();
+					FileWriter fw = new FileWriter(f);
+					fw.write(saveListToFile(temp));
+					fw.close();
+					temp.clear();
+					fileNum++;
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 			}
+		}
+		
+		if (temp.size() == 0) return;
+		StringBuilder sb = new StringBuilder("custom/data-repo-" + fileNum + ".raf");
+		File f = new File(sb.toString());
+		try {
+			f.createNewFile();
+			FileWriter fw = new FileWriter(f);
+			fw.write(saveListToFile(temp));
+			fw.close();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 	}
 	
@@ -83,7 +107,7 @@ public class DataRepoCustomImpl extends DataRepoSpec{
 		>
 	 */
 
-	private void saveListToFile(List<Entity> lista, String pathname) {
+	private String saveListToFile(List<Entity> lista) {
 		StringBuilder sb = new StringBuilder("<\n\t");
 		
 		for (int i = 0; i < lista.size(); i++) {
@@ -125,28 +149,20 @@ public class DataRepoCustomImpl extends DataRepoSpec{
 						sb.append(",");
 					}
 					sb.deleteCharAt(sb.length() - 1);
-					sb.append("\n\t\t\t\t}");
+					sb.append("\n\t\t\t\t}\n\t\t\t)");
 				}
 				sb.append(",");
 			}
 			sb.deleteCharAt(sb.length()-1);
 			sb.append("\n"
 					+ "\t\t}"
-					+ "\n\t),");
+					+ "\n\t),\n\t");
 		}
+		sb.deleteCharAt(sb.length() - 3);
 		sb.deleteCharAt(sb.length() - 1);
-		sb.append("\n");
 		sb.append(">");
 		
-		File f = new File(pathname);
-		try {
-			FileWriter fw = new FileWriter(f);
-			fw.write(sb.toString());
-			fw.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		return sb.toString();
 	}
 	
 	@Override

@@ -9,7 +9,7 @@ Acts as a local database that stores a variety of entities in a specific format 
   - [X] Auto generate ID by choice
 - [X] Create JSON implementation
 - [X] Create YAML implementation
-- [ ] Create custom format implementation
+- [X] Create custom format implementation
 - [ ] CRUD operations:
   - [X] Add
   - [ ] Update

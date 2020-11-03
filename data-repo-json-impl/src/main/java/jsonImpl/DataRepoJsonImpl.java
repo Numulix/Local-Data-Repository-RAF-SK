@@ -27,7 +27,7 @@ public class DataRepoJsonImpl extends DataRepoSpec{
 	public DataRepoJsonImpl() {
 		super();
 		gson = new GsonBuilder().setPrettyPrinting().create();
-		jsonRepo = new File("json");
+		jsonRepo = new File(getPathName());
 		jsonRepo.mkdir();
 	}
 
@@ -47,7 +47,7 @@ public class DataRepoJsonImpl extends DataRepoSpec{
 			counter++;
 			if (counter == getMaxEnPerFile()) {
 				counter = 0;
-				StringBuilder sb = new StringBuilder("json/data-repo-");
+				StringBuilder sb = new StringBuilder(getPathName() + "/data-repo-");
 				sb.append(fileNum);
 				sb.append(".json");
 				File f = new File(sb.toString());
@@ -66,7 +66,7 @@ public class DataRepoJsonImpl extends DataRepoSpec{
 		}
 		
 		if (temp.size() == 0) return;
-		StringBuilder sb = new StringBuilder("json/data-repo-");
+		StringBuilder sb = new StringBuilder(getPathName() + "/data-repo-");
 		sb.append(fileNum);
 		sb.append(".json");
 		File f = new File(sb.toString());

@@ -1,10 +1,14 @@
 package customImpl;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 import api.DataRepoSpec;
 import api.Entity;
@@ -15,14 +19,14 @@ public class DataRepoCustomImpl extends DataRepoSpec{
 	
 	public DataRepoCustomImpl() {
 		super();
-		customRepo = new File("custom");
+		customRepo = new File(getPathName());
 		customRepo.mkdir();
 	}
 	
 	@Override
 	public void save() {
 		for (File f: customRepo.listFiles()) {
-			f.delete();
+			if (f.getName().endsWith(".raf")) f.delete();
 		}
 		
 		List<Entity> temp = new ArrayList<Entity>();
@@ -36,7 +40,7 @@ public class DataRepoCustomImpl extends DataRepoSpec{
 			if (counter == getMaxEnPerFile()) {
 
 				counter = 0;
-				StringBuilder sb = new StringBuilder("custom/data-repo-");
+				StringBuilder sb = new StringBuilder(getPathName() + "/data-repo-");
 				sb.append(fileNum);
 				sb.append(".raf");
 				File f = new File(sb.toString());
@@ -54,7 +58,7 @@ public class DataRepoCustomImpl extends DataRepoSpec{
 		}
 		
 		if (temp.size() == 0) return;
-		StringBuilder sb = new StringBuilder("custom/data-repo-" + fileNum + ".raf");
+		StringBuilder sb = new StringBuilder(getPathName() + "/data-repo-" + fileNum + ".raf");
 		File f = new File(sb.toString());
 		try {
 			f.createNewFile();
@@ -167,8 +171,108 @@ public class DataRepoCustomImpl extends DataRepoSpec{
 	
 	@Override
 	public void load() {
-		// TODO Auto-generated method stub
-		
+		for (File f: customRepo.listFiles()) {
+			
+			try {
+				Scanner sc = new Scanner(f);
+				int objectFlag = 0;
+				int attrFlag = 0;
+				String entityKey = null;
+				
+				int id = 0;
+				String name = null;
+				HashMap<String, Object> attributes = new HashMap<String, Object>();
+				
+				int idAttr = 0;
+				String nameAttr = null;
+				LinkedHashMap<String, Object> attributesAttr = new LinkedHashMap<String, Object>();
+				
+				while (sc.hasNextLine()) {
+					String line = sc.nextLine().trim().replace(";", "").replace(",", "");
+					
+					if (line.equals("(")) {
+						objectFlag++;
+						continue;
+					}
+					
+					if (line.equals(")")) {
+						objectFlag--;
+						if (objectFlag == 0) {
+							getEntityList().add(new Entity(id, name, attributes));
+							attributes = new LinkedHashMap<>();
+						}
+						continue;
+					}
+					
+					if (attrFlag == 2) {
+						if (line.equals("}")) {
+							attributes.put(entityKey, new Entity(idAttr, nameAttr, attributesAttr));
+							attributesAttr = new LinkedHashMap<>();
+							attrFlag--;
+							continue;
+						}
+						
+						String[] spl = line.split(" -> ");
+						attributesAttr.put(spl[0].replace("\"", ""), spl[1].replace("\"", ""));
+						continue;
+					}
+					
+					else if (objectFlag == 2) {
+						if (line.equals(")")) {
+							objectFlag--;
+							continue;
+						}
+						
+						String[] spl = line.split(" -> ");
+						
+						if (spl[0].equals("\"id\"")) {
+							idAttr = Integer.parseInt(spl[1]);
+							continue;
+						} else if (spl[0].equals("\"name\"") ) {
+							nameAttr = spl[1].replace("\"", "");
+							continue;
+						} else if (spl[0].equals("\"attributes\"")) {
+							attrFlag++;
+							continue;
+						}
+					}
+					
+					else if (attrFlag == 1) {
+						if (line.equals("}")) {
+							attrFlag--;
+							continue;
+						}
+						String[] attr = line.split(" -> ");
+						if (attr[1].equals("(")) {
+							entityKey = attr[0].replace("\"", "");
+							objectFlag++;
+							continue;
+						}
+						else {
+							attributes.put(attr[0].replace("\"", ""), attr[1].replace("\"", ""));
+							continue;
+						}
+					}
+					
+					else if (objectFlag == 1) {
+						
+						String[] split = line.split(" -> ");
+						if (split[0].equals("\"id\"")) id = Integer.parseInt(split[1]);
+						else if (split[0].equals("\"name\"")) name = split[1].replace("\"", "");
+						else if (split[0].equals("\"attributes\"")) {
+							attrFlag++;
+							continue;
+						}
+						
+					}
+					
+				}
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 	}
 
 }

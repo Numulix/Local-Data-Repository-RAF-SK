@@ -23,7 +23,7 @@ public class DataRepoYamlImpl extends DataRepoSpec{
 	public DataRepoYamlImpl() {
 		super();
 		mapper = new ObjectMapper(new YAMLFactory());
-		yamlRepo = new File("yaml");
+		yamlRepo = new File(getPathName());
 		yamlRepo.mkdir();
 	}
 
@@ -44,7 +44,7 @@ public class DataRepoYamlImpl extends DataRepoSpec{
 			
 			if (counter == getMaxEnPerFile()) {
 				counter = 0;
-				StringBuilder sb = new StringBuilder("yaml/data-repo-");
+				StringBuilder sb = new StringBuilder(getPathName() + "/data-repo-");
 				sb.append(fileNum);
 				sb.append(".yaml");
 				File f = new File(sb.toString());
@@ -62,7 +62,7 @@ public class DataRepoYamlImpl extends DataRepoSpec{
 		}
 		
 		if (temp.size() == 0) return;
-		StringBuilder sb = new StringBuilder("yaml/data-repo-");
+		StringBuilder sb = new StringBuilder(getPathName() + "/data-repo-");
 		sb.append(fileNum);
 		sb.append(".yaml");
 		File f = new File(sb.toString());

@@ -9,6 +9,7 @@ public abstract class DataRepoSpec {
 	private List<Entity> entityList;
 	private boolean autoGenID;
 	private int maxEnPerFile;
+	private String pathName;
 	
 	public DataRepoSpec() {
 		entityList = new ArrayList<Entity>();
@@ -22,6 +23,10 @@ public abstract class DataRepoSpec {
 		return maxEnPerFile;
 	}
 	
+	public String getPathName() {
+		return pathName;
+	}
+	
 	public boolean isAutoGenID() {
 		return autoGenID;
 	}
@@ -32,6 +37,10 @@ public abstract class DataRepoSpec {
 	
 	public void setAutoGenID(boolean autoGenID) {
 		this.autoGenID = autoGenID;
+	}
+	
+	public void setPathName(String pathName) {
+		this.pathName = pathName;
 	}
 	
 	private int findMaxID() {

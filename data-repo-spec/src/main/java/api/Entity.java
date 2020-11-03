@@ -41,4 +41,9 @@ public class Entity {
 	public void setAttributes(Map<String, Object> attributes) {
 		this.attributes = attributes;
 	}
+	
+	@Override
+	public String toString() {
+		return "(" + this.id + ", " + this.name + ", " + this.attributes + ")"; 
+	}
 }

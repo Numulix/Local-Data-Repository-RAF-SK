@@ -53,12 +53,28 @@ public abstract class DataRepoSpec {
 		return max;
 	}
 	
+	private boolean checkID(int id) {
+		for (Entity e: entityList) {
+			if (e.getId() == id) return false;
+		}
+		
+		return true;
+	}
+	
+	private boolean checkName(String name) {
+		for (Entity e: entityList) {
+			if (e.getName().equals(name)) return true;
+		}
+		
+		return false;
+	}
+	
 	private void addEntity(Entity en) {
 		getEntityList().add(en);
 		save();
 	}
 	
-	public void delete(Entity en) {
+	private void delete(Entity en) {
 		entityList.remove(en);
 		save();
 	}
@@ -71,17 +87,73 @@ public abstract class DataRepoSpec {
 		return null;
 	}
 	
-	public void deleteByID(int id) {
-		delete(findEntityByID(id));
+	public boolean deleteByID(int id) {
+		if (!checkID(id)) {
+			delete(findEntityByID(id));
+			return true;
+		}
+		return false;
 	}
 	
-	public void add(int id, String name, Map<String, Object> attributes) {
-		addEntity(new Entity(id, name, attributes));
+	public boolean deleteByEntityName(String name) {
+		if (checkName(name)) {
+			for (Entity e: entityList) {
+				if (e.getName().equals(name)) entityList.remove(e);
+			}
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean deleteByNameAndAttr(String name, Map<String, Object> attr) {
+		if (checkName(name)) {
+			for (Entity e: entityList ) {
+				if (e.getName().equals(name)) {
+					boolean flag = true;
+					for (Map.Entry<String, Object> entry: attr.entrySet()) {
+						if (e.getAttributes().containsKey(entry.getKey())) {
+							if (!e.getAttributes().get(entry.getKey()).equals(entry.getValue())) {
+								flag = false;
+								break;
+							}
+						} else {
+							flag = false;
+							break;
+						}
+					}
+					if (flag) entityList.remove(e);
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean add(int id, String name, Map<String, Object> attributes) {
+		if (checkID(id)) {
+			addEntity(new Entity(id, name, attributes));
+			return true;
+		}
+		return false;
 	}
 	
 	public void addAutoId(String name, Map<String, Object> attributes) {
 		int maxId = findMaxID();
 		addEntity(new Entity(maxId+1, name, attributes));
+	}
+	
+	public void updateEntity(int id, String name, Map<String, Object> attributes) {
+		Entity en = findEntityByID(id);
+		en.setName(name);
+		en.setAttributes(attributes);
+		save();
+	}
+	
+	public void addEntityAsAttribute(int idEnt, String attrName, int idAttr, String nameAttr, Map<String, Object> attr) {
+		if (!checkID(idEnt)) {
+			Entity en = findEntityByID(idEnt);
+			en.getAttributes().put(attrName, new Entity(idAttr, nameAttr, attr));
+		}
 	}
 	
 	public List<Entity> filterByArgs(List<Entity> list, Map<String, Object> args) {
@@ -136,7 +208,7 @@ public abstract class DataRepoSpec {
 		List<Entity> returnList = new ArrayList<Entity>();
 		
 		for (Entity e: entityList) {
-			if (e.getName().equals(name)) returnList.add(e);
+			if (e.getName().contains(name)) returnList.add(e);
 		}
 		
 		return returnList;

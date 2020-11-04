@@ -22,18 +22,15 @@ import api.Entity;
 public class DataRepoJsonImpl extends DataRepoSpec{
 	
 	private Gson gson;
-	private File jsonRepo;
 	
 	public DataRepoJsonImpl() {
 		super();
 		gson = new GsonBuilder().setPrettyPrinting().create();
-		jsonRepo = new File(getPathName());
-		jsonRepo.mkdir();
 	}
 
 	@Override
 	public void save() {
-		for (File f: jsonRepo.listFiles()) {
+		for (File f: new File(getPathName()).listFiles()) {
 			if (f.getName().endsWith(".json"));
 				f.delete();
 		}
@@ -83,8 +80,11 @@ public class DataRepoJsonImpl extends DataRepoSpec{
 	
 	@Override
 	public void load() {
+		File repoDir = new File(getPathName());
+		if (repoDir.listFiles() == null) return;
 		
-		for (File f: jsonRepo.listFiles()) {
+		
+		for (File f: new File(getPathName()).listFiles()) {
 			try {
 				JsonArray array = JsonParser.parseReader(new FileReader(f)).getAsJsonArray();
 				for (JsonElement e: array) {

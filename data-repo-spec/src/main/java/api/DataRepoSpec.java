@@ -8,8 +8,8 @@ public abstract class DataRepoSpec {
 	
 	private List<Entity> entityList;
 	private boolean autoGenID;
-	private int maxEnPerFile;
-	private String pathName;
+	private int maxEnPerFile = 5;
+	private String pathName = null;
 	
 	public DataRepoSpec() {
 		entityList = new ArrayList<Entity>();
@@ -90,6 +90,7 @@ public abstract class DataRepoSpec {
 	public boolean deleteByID(int id) {
 		if (!checkID(id)) {
 			delete(findEntityByID(id));
+			save();
 			return true;
 		}
 		return false;
@@ -100,6 +101,7 @@ public abstract class DataRepoSpec {
 			for (Entity e: entityList) {
 				if (e.getName().equals(name)) entityList.remove(e);
 			}
+			save();
 			return true;
 		}
 		return false;
@@ -124,6 +126,7 @@ public abstract class DataRepoSpec {
 					if (flag) entityList.remove(e);
 				}
 			}
+			save();
 			return true;
 		}
 		return false;

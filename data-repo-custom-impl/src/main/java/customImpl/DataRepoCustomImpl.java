@@ -14,18 +14,15 @@ import api.DataRepoSpec;
 import api.Entity;
 
 public class DataRepoCustomImpl extends DataRepoSpec{
-
-	private File customRepo;
 	
 	public DataRepoCustomImpl() {
 		super();
-		customRepo = new File(getPathName());
-		customRepo.mkdir();
 	}
 	
 	@Override
 	public void save() {
-		for (File f: customRepo.listFiles()) {
+		
+		for (File f: new File(getPathName()).listFiles()) {
 			if (f.getName().endsWith(".raf")) f.delete();
 		}
 		
@@ -171,7 +168,8 @@ public class DataRepoCustomImpl extends DataRepoSpec{
 	
 	@Override
 	public void load() {
-		for (File f: customRepo.listFiles()) {
+		if (getPathName().isEmpty()) return;
+		for (File f: new File(getPathName()).listFiles()) {
 			
 			try {
 				Scanner sc = new Scanner(f);

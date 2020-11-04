@@ -10,9 +10,9 @@ Acts as a local database that stores a variety of entities in a specific format 
 - [X] Create JSON implementation
 - [X] Create YAML implementation
 - [X] Create custom format implementation
-- [ ] CRUD operations:
+- [X] CRUD operations:
   - [X] Add
-  - [ ] Update
+  - [X] Update
   - [X] Delete
 - [ ] Filter data
   - [X] Filter data by given entity name

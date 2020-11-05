@@ -18,18 +18,15 @@ import api.Entity;
 public class DataRepoYamlImpl extends DataRepoSpec{
 	
 	private ObjectMapper mapper;
-	private File yamlRepo;
 	
 	public DataRepoYamlImpl() {
 		super();
 		mapper = new ObjectMapper(new YAMLFactory());
-		yamlRepo = new File(getPathName());
-		yamlRepo.mkdir();
 	}
 
 	@Override
 	public void save() {
-		for (File f: yamlRepo.listFiles()) {
+		for (File f: new File(getPathName()).listFiles()) {
 			if (f.getName().endsWith(".yaml") || f.getName().endsWith(".yml"))
 				f.delete();
 		}
@@ -77,8 +74,8 @@ public class DataRepoYamlImpl extends DataRepoSpec{
 
 	@Override
 	public void load() {
-		
-		for (File f: yamlRepo.listFiles()) {
+		if (getPathName().isEmpty()) return;
+		for (File f: new File(getPathName()).listFiles()) {
 			
 			try {
 				List<Entity> list = mapper.readValue(f, new TypeReference<List<Entity>>() {});

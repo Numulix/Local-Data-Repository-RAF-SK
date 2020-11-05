@@ -35,6 +35,7 @@ public class MainView extends JFrame {
 		db = new DataRepoCustomImpl();
 		db.setPathName(ConstUtils.getPathName());
 		db.setMaxEnPerFile(ConstUtils.getMaxEnPerFile());
+		db.setAutoGenID(ConstUtils.isAutoGenID());
 		
 		
 		entityListModel = new DefaultListModel<>();
@@ -59,6 +60,8 @@ public class MainView extends JFrame {
         setLayout (null);
         setTitle("Data Repo Application");
         setLocationRelativeTo(null);
+        
+        
         
         add (entityJList);
         add (addEntityButton);

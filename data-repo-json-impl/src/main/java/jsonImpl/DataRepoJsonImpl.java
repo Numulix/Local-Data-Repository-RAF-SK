@@ -80,6 +80,7 @@ public class DataRepoJsonImpl extends DataRepoSpec{
 	
 	@Override
 	public void load() {
+		if (getPathName().isEmpty()) return;
 		File repoDir = new File(getPathName());
 		if (repoDir.listFiles() == null) return;
 		

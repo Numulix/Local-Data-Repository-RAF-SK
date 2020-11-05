@@ -29,10 +29,15 @@ public class ConfirmButtonController extends AbstractAction{
 				return;
 			}
 		else enNumber = 5;
-		
+
 		pathName = ConfigDialog.getInstance().getFilePathTextField().getText().trim();
-		System.out.println(pathName);
 		
+		if (pathName.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Please specify a path to a directory", "Path error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
+		ConstUtils.setAutoGenID(ConfigDialog.getInstance().yesSelected());
 		ConstUtils.setMaxEnPerFile(enNumber);
 		ConstUtils.setPathName(pathName);
 		

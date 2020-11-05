@@ -42,7 +42,7 @@ public class ConfigDialog extends JDialog {
         label2 = new JLabel ("Max Entiteta po fajlu (Default je 5)");
         entityNumberTextField = new JTextField (5);
         confirmButton = new JButton ("Potvrdi");
-        label3 = new JLabel ("Pocni iz postojace baze");
+        label3 = new JLabel ("Postojaca baza ili direktorijum nove");
         browseButton = new JButton ("Browse");
         filePathTextField = new JTextField (5);
         btnGrp = new ButtonGroup();
@@ -76,7 +76,7 @@ public class ConfigDialog extends JDialog {
         label2.setBounds (10, 65, 200, 25);
         entityNumberTextField.setBounds (215, 65, 185, 25);
         confirmButton.setBounds (150, 205, 100, 25);
-        label3.setBounds (50, 115, 140, 25);
+        label3.setBounds (15, 115, 215, 25);
         browseButton.setBounds (230, 115, 100, 25);
         filePathTextField.setBounds (15, 160, 385, 25);
         

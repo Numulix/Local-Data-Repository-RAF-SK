@@ -172,6 +172,7 @@ public class DataRepoCustomImpl extends DataRepoSpec{
 		for (File f: new File(getPathName()).listFiles()) {
 			
 			try {
+				if (!f.getName().endsWith(".raf")) continue;
 				Scanner sc = new Scanner(f);
 				int objectFlag = 0;
 				int attrFlag = 0;

@@ -11,7 +11,6 @@ import javax.swing.JScrollPane;
 import api.DataRepoSpec;
 import api.Entity;
 import customImpl.DataRepoCustomImpl;
-import jsonImpl.DataRepoJsonImpl;
 import utils.ConstUtils;
 
 public class MainView extends JFrame {

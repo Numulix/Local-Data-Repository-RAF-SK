@@ -14,11 +14,16 @@ Acts as a local database that stores a variety of entities in a specific format 
   - [X] Add
   - [X] Update
   - [X] Delete
-- [ ] Filter data
+- [X] Filter data
   - [X] Filter data by given entity name
-  - [ ] Filter data by given attributes and their values
-- [ ] Sort data
+  - [X] Filter data by given attributes and their values
+- [X] Sort data
+  - [X] Sort entities by ID
+  - [X] Sort entities by Entity name
 - [ ] GUI test application
+  - [X] Starting config dialog (auto config ID, max entities per file, empty directory or existing storage directory)
+  - [X] Main frame window with entity list
+  - [ ] Buttons and their functionalities 
 
 ## Custom format example
 ```

@@ -1,6 +1,7 @@
 package api;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -222,6 +223,15 @@ public abstract class DataRepoSpec {
 		
 		return filterByArgs(nameList, args);
 	}
+	
+	public void sortEntityByID() {
+		Collections.sort(entityList, new SortEntityByID());
+	}
+	
+	public void sortEntityByName() {
+		Collections.sort(entityList, new SortEntityByName());
+	}
+	
 	
 	public abstract void save();
 	public abstract void load();

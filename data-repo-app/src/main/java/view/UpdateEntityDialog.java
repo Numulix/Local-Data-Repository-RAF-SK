@@ -1,11 +1,13 @@
 package view;
 
 import java.awt.Dimension;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -50,6 +52,8 @@ public class UpdateEntityDialog extends JDialog {
         add (exampleLabel);
         add (okButton);
         
+        idTextField.setEnabled(false);
+        
         idLabel.setBounds (15, 45, 100, 25);
         idTextField.setBounds (120, 45, 190, 25);
         nameLabel.setBounds (15, 105, 100, 25);
@@ -61,6 +65,32 @@ public class UpdateEntityDialog extends JDialog {
         okButton.setBounds (120, 435, 100, 25);
         
         okButton.addActionListener(e -> {
+        	int id = 0;
+        	String name;
+        	HashMap<String, Object> attr = new HashMap<>();
+        	
+        	try {
+				id = Integer.parseUnsignedInt(idTextField.getText().trim());
+			} catch (Exception e2) {
+				JOptionPane.showMessageDialog(null, "Please input a valid number", "Number error", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+        	
+        	name = nameTextField.getText().trim();
+        	
+        	String[] split = attrTextArea.getText().split("\n");
+        	
+        	for (String line: split) {
+        		if (!line.contains(":")) {
+        			JOptionPane.showMessageDialog(null, "Invalid key value", "Attribute error", JOptionPane.ERROR_MESSAGE);
+    				return;
+        		}
+        		String[] a = line.split(":");
+        		attr.put(a[0], a[1]);
+        	}
+        	
+        	MainView.getInstance().getDb().updateEntity(id, name, attr);
+        	MainView.getInstance().refreshList();
         	dispose();
         });
     	

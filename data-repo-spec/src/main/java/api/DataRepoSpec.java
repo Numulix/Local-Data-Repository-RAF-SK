@@ -91,7 +91,6 @@ public abstract class DataRepoSpec {
 	public boolean deleteByID(int id) {
 		if (!checkID(id)) {
 			delete(findEntityByID(id));
-			save();
 			return true;
 		}
 		return false;

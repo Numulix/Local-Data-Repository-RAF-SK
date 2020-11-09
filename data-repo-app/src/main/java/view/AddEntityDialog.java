@@ -94,6 +94,10 @@ public class AddEntityDialog extends JDialog {
         		}
         	}
         	
+        	idTextField.setText("");
+        	nameTextField.setText("");
+        	attrTextArea.setText("");
+        	
         	setVisible(false);
         });
         

@@ -10,6 +10,7 @@ import javax.swing.JScrollPane;
 
 import api.DataRepoSpec;
 import api.Entity;
+import controller.AddEntityButtonController;
 import customImpl.DataRepoCustomImpl;
 import utils.ConstUtils;
 
@@ -71,6 +72,8 @@ public class MainView extends JFrame {
         add (addEntityAttrButton);
         add (openButton);
         
+        addEntityButton.addActionListener(new AddEntityButtonController());
+        
         entityJList.setBounds (35, 25, 470, 225);
         addEntityButton.setBounds (35, 275, 100, 25);
         deleteEntityButton.setBounds (160, 275, 100, 25);
@@ -100,5 +103,16 @@ public class MainView extends JFrame {
 	
 	public void setPathName(String pathName) {
 		this.pathName = pathName;
+	}
+	
+	public DefaultListModel<Entity> getEntityListModel() {
+		return entityListModel;
+	}
+	
+	public void refreshList() {
+		entityListModel.removeAllElements();
+		for (Entity e: db.getEntityList()) {
+			entityListModel.addElement(e);
+		}
 	}
 }

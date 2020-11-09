@@ -76,7 +76,7 @@ public abstract class DataRepoSpec {
 	}
 	
 	private void delete(Entity en) {
-		entityList.remove(en);
+		entityList.remove(entityList.indexOf(en));
 		save();
 	}
 	

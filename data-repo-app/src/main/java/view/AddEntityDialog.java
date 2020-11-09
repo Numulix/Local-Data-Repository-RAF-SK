@@ -98,7 +98,7 @@ public class AddEntityDialog extends JDialog {
         	nameTextField.setText("");
         	attrTextArea.setText("");
         	
-        	setVisible(false);
+        	dispose();
         });
         
         idLabel.setBounds (15, 45, 100, 25);

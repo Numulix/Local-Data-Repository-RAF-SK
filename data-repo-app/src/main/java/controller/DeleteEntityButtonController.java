@@ -1,6 +1,7 @@
 package controller;
 
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 
@@ -12,7 +13,9 @@ public class DeleteEntityButtonController extends AbstractAction {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		for (Entity en: MainView.getInstance().getEntityJList().getSelectedValuesList()) {
+		List<Entity> list = MainView.getInstance().getEntityJList().getSelectedValuesList();
+		
+		for (Entity en: list) {
 			MainView.getInstance().getDb().deleteByID(en.getId());
 		}
 		

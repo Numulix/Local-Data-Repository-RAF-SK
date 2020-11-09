@@ -1,10 +1,12 @@
 package customImpl;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,8 +24,19 @@ public class DataRepoCustomImpl extends DataRepoSpec{
 	@Override
 	public void save() {
 		
-		for (File f: new File(getPathName()).listFiles()) {
-			if (f.getName().endsWith(".raf")) f.delete();
+		File dir = new File(getPathName());
+		
+		
+		for (File f: dir.listFiles()) {
+			System.out.println(f.getName());
+			if (f.getName().endsWith(".raf")) {
+				f.delete();
+			}
+		}
+	
+		
+		if (getEntityList().isEmpty()) {
+			return;
 		}
 		
 		List<Entity> temp = new ArrayList<Entity>();
@@ -169,6 +182,7 @@ public class DataRepoCustomImpl extends DataRepoSpec{
 	@Override
 	public void load() {
 		if (getPathName().isEmpty()) return;
+		
 		for (File f: new File(getPathName()).listFiles()) {
 			
 			try {

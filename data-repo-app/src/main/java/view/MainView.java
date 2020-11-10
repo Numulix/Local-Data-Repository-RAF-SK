@@ -3,6 +3,7 @@ package view;
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -63,51 +64,7 @@ public class MainView extends JFrame {
         setLayout (null);
         setTitle("Data Repo Application");
         setLocationRelativeTo(null);
-
-        addWindowListener(new WindowListener() {
-			
-			@Override
-			public void windowOpened(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void windowIconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void windowDeiconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void windowDeactivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void windowClosing(WindowEvent e) {
-				db.save();
-				System.out.println(db.getEntityList());
-			}
-			
-			@Override
-			public void windowClosed(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void windowActivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         
         add (entityJList);
@@ -125,6 +82,9 @@ public class MainView extends JFrame {
         
         deleteEntityButton.addActionListener(new DeleteEntityButtonController());
         updateEntityButton.addActionListener(new UpdateEntityButtonController());
+        filterButton.addActionListener(e -> {
+        	FilterDialog.getInstance().setVisible(true);
+        });
         
         entityJList.setBounds (35, 25, 470, 225);
         addEntityButton.setBounds (35, 275, 100, 25);
@@ -164,6 +124,13 @@ public class MainView extends JFrame {
 	public void refreshList() {
 		entityListModel.removeAllElements();
 		for (Entity e: db.getEntityList()) {
+			entityListModel.addElement(e);
+		}
+	}
+	
+	public void filter(List<Entity> list) {
+		entityListModel.removeAllElements();
+		for (Entity e: list) {
 			entityListModel.addElement(e);
 		}
 	}

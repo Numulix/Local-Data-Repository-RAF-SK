@@ -14,6 +14,7 @@ import javax.swing.JScrollPane;
 import api.DataRepoSpec;
 import api.Entity;
 import controller.DeleteEntityButtonController;
+import controller.OpenButtonController;
 import controller.UpdateEntityButtonController;
 import customImpl.DataRepoCustomImpl;
 import utils.ConstUtils;
@@ -95,6 +96,8 @@ public class MainView extends JFrame {
         	AddEntityAsAttrDialog.getInstance().setSelected(entityJList.getSelectedValue());
         	AddEntityAsAttrDialog.getInstance().setVisible(true);
         });
+        
+        openButton.addActionListener(new OpenButtonController());
         
         entityJList.setBounds (35, 25, 470, 225);
         addEntityButton.setBounds (35, 275, 100, 25);

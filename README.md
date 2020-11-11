@@ -20,10 +20,10 @@ Acts as a local database that stores a variety of entities in a specific format 
 - [X] Sort data
   - [X] Sort entities by ID
   - [X] Sort entities by Entity name
-- [ ] GUI test application
+- [X] GUI test application
   - [X] Starting config dialog (auto config ID, max entities per file, empty directory or existing storage directory)
   - [X] Main frame window with entity list
-  - [ ] Buttons and their functionalities 
+  - [X] Buttons and their functionalities 
 
 ## Custom format example
 ```

@@ -72,6 +72,12 @@ public class AddEntityDialog extends JDialog {
         	}
         	
         	name = nameTextField.getText().trim();
+        	
+        	if (name.isEmpty()) {
+        		JOptionPane.showMessageDialog(null, "Please provide a name for the entity", "Name error", JOptionPane.ERROR_MESSAGE);
+        		return;
+        	}
+        	
         	String[] attrSplit = attrTextArea.getText().split("\n");
         	
         	for (String a: attrSplit) {

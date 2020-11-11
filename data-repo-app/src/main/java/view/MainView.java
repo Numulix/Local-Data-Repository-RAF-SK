@@ -90,6 +90,12 @@ public class MainView extends JFrame {
         	SortByDialog.getInstance().setVisible(true);
         });
         
+        addEntityAttrButton.addActionListener(e -> {
+        	if (entityJList.getSelectedValue() == null) return;
+        	AddEntityAsAttrDialog.getInstance().setSelected(entityJList.getSelectedValue());
+        	AddEntityAsAttrDialog.getInstance().setVisible(true);
+        });
+        
         entityJList.setBounds (35, 25, 470, 225);
         addEntityButton.setBounds (35, 275, 100, 25);
         deleteEntityButton.setBounds (160, 275, 100, 25);

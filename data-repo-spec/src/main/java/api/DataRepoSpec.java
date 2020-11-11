@@ -156,6 +156,7 @@ public abstract class DataRepoSpec {
 		if (!checkID(idEnt)) {
 			Entity en = findEntityByID(idEnt);
 			en.getAttributes().put(attrName, new Entity(idAttr, nameAttr, attr));
+			save();
 		}
 	}
 	

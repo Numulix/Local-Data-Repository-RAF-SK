@@ -28,7 +28,6 @@ public class DataRepoCustomImpl extends DataRepoSpec{
 		
 		
 		for (File f: dir.listFiles()) {
-			System.out.println(f.getName());
 			if (f.getName().endsWith(".raf")) {
 				f.delete();
 			}

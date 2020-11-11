@@ -86,6 +86,10 @@ public class MainView extends JFrame {
         	FilterDialog.getInstance().setVisible(true);
         });
         
+        sortButton.addActionListener(e -> {
+        	SortByDialog.getInstance().setVisible(true);
+        });
+        
         entityJList.setBounds (35, 25, 470, 225);
         addEntityButton.setBounds (35, 275, 100, 25);
         deleteEntityButton.setBounds (160, 275, 100, 25);

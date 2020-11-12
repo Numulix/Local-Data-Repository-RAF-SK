@@ -2,6 +2,12 @@ package api;
 
 import java.util.Comparator;
 
+/**
+ * Klasa koja predstavlja komparator entiteta po svojim imenima
+ * 
+ * @author Babic
+ *
+ */
 public class SortEntityByName implements Comparator<Entity> {
 
 	@Override

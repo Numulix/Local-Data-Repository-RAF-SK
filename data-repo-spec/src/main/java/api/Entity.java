@@ -2,6 +2,13 @@ package api;
 
 import java.util.Map;
 
+/**
+ * Klasa koja predstavlja entitet
+ * 
+ * @author Jovan Babic RN 30/18
+ * @author Filip Cmiljanovic RN 5/18
+ *
+ */
 public class Entity {
 	
 	private int id;
